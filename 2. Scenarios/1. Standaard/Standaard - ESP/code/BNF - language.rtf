@@ -1,0 +1,87 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf100
+{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww15780\viewh10200\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf0 <commandline> ::= <command> <eol>\
+\
+<command>  ::= \{ \
+                 <get> | <set> \
+                 | <stop> | <start> | <move> | <led> \
+                 | <message>\
+                 | <network>\
+                 | <tell>\
+               \}\
+\
+# Generic commands, sending\
+<move>     ::= \{ forward | backward \} <id> [<steps>]\
+<turn>     ::= \{ left | right \} <id> [<degrees>]\
+<led>      ::= led <id> \{ on | off | <octet> \}\
+<stop>     ::= stop <id>\
+<start>    ::= start <id>\
+\
+# Generic commands, receiving\
+<move>     ::= \{ forward | backward \} [<steps>]\
+<turn>     ::= \{ left | right \} [<degrees>]\
+<led>      ::= led \{ on | off | <octet> \}\
+<stop>     ::= stop\
+<start>    ::= start\
+\
+# Commands triggered (only) by Leaphy\
+<get>      ::= get myid\
+               | get myname [<id>]\
+               | get version\
+               | get network\
+\
+<set>      ::= set name <identifier>\
+               | set network <netid> <password>\
+<netid>    ::= <identifier>\
+<password> ::= <identifier>\
+\
+<send>     ::= send <id> <identifier>\
+\
+<tell>     ::= tell <id> <command>\
+\
+<message>  ::= <string>\
+\
+<network>  ::= network \{ join <netid> <password>\
+                         | create <netid> <password> | \
+                         | leave [<netid>] \
+                       \} \
+\
+# Responses received by Leaphy\
+<responseline> ::= \{ <response> | <command> \} <eol>\
+<response>     ::= response \{   myid <id>\
+                              | myname <identifier> [<id>]\
+                              | version <octet>\
+                              | message <quote> <string> <quote>\
+                              | network \{ created \
+                                          | connected \
+                                          | notconnected \
+                                          | netid <netid> \
+                                        \}\
+                            \} \
+\
+# identifiers \
+<identifier> ::= <letter> [ <nospace> ]*\
+<id>         ::= <octet> | "all"\
+<octet>      ::= <digit> [ <digit> [ <digit> ]]\
+\
+# Special characters\
+<delimeter>  ::= " " [<delimeter>]\
+<quote>      ::= """\
+<space>      ::= " "\
+<eol>        ::= CR [LF] | LF [CR]\
+\
+# Characters\
+\
+<string>     ::= \{ <letter> | <digit> | <space> | <char> \} [ <string> ]\
+\
+<letter>     ::= A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z\
+<letter>     ::= a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z\
+<digit>      ::= 0|1|2|3|4|5|6|7|8|9\
+<special>    ::= _|!\
+<nospace>    ::= <letter> | <digit> | <special>\
+}
